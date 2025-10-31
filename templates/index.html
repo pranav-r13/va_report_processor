@@ -33,6 +33,7 @@
                   <select id="operation" name="operation" class="form-select" required>
                     <option value="consolidate">Consolidate Nessus report</option>
                     <option value="summary">Finding Summary</option>
+                    <option value="format_cve">Format CVE (single consolidated CSV)</option>
                   </select>
                 </div>
 
@@ -63,11 +64,11 @@
 
       function updateFields() {
         const op = operationSelect.value;
-        const isSummary = op === 'summary';
-        filesInput.multiple = !isSummary;
+        const isSingle = (op === 'summary') || (op === 'format_cve');
+        filesInput.multiple = !isSingle;
         filesInput.value = '';
-        filesLabel.textContent = isSummary ? 'Upload single CSV' : 'Upload CSV files';
-        filesHelp.textContent = isSummary ? 'Select one .csv file for Summary.' : 'Select multiple .csv files for Consolidate.';
+        filesLabel.textContent = isSingle ? 'Upload single CSV' : 'Upload CSV files';
+        filesHelp.textContent = isSingle ? 'Select one .csv file.' : 'Select multiple .csv files for Consolidate.';
       }
 
       operationSelect.addEventListener('change', updateFields);
